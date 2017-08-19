@@ -1,26 +1,29 @@
 <?php
     
     include("simple_html_dom.php");
-    $roll_no= ($_GET['roll']);
-    $roll_no=(round(($roll_no)/1000))*1000;
+    $roll_no= ($_POST['roll']);
+    //echo $roll_no;
+    $roll_no=(round(($roll_no)/1000))*1000 + (int)$_POST['min'];
     //echo $roll_no;
     $marks=0;  
     $total_students=-1; 
     $name_student= array();
     $marks_student=array();
-    if(!$_GET['max'])
+    if(!$_POST['max'])
         $max=10;
     else
-        $max=$_GET['max'];
-    for($i=0;$i<$max;$i++){
+        $max=$_POST['max'];
+    for($i=0;$i<$max-$_POST['min'];$i++){
         
+        if($roll_no==12615007000)
+                  $roll_no=$roll_no+2;
         $request= array(
             'http' => array(
                 'method' =>'POST',
                 'header' => "Content-Type: application/x-www-form-urlencoded\r\n",
                 'content' => http_build_query(array(
                     'roll' => (string)($roll_no++),
-                    'sem' => $_GET['sem']
+                    'sem' => $_POST['sem']
                 )),
             
             )
